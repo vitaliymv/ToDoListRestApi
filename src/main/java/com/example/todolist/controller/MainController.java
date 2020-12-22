@@ -30,11 +30,11 @@ public class MainController {
     @DeleteMapping("/tasks/{id}")
     public ResponseEntity deleteTask(@PathVariable UUID id) {
         try {
-            taskService.deleteTask(id);
+            taskService.removeTask(id);
         } catch (Exception e) {
-            return new ResponseEntity("Success", HttpStatus.OK);
+            return new ResponseEntity("Not found", HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity("Not found", HttpStatus.NOT_FOUND);
+        return new ResponseEntity("Success", HttpStatus.OK);
     }
 
 }

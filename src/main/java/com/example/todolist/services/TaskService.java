@@ -1,13 +1,18 @@
 package com.example.todolist.services;
 
 import com.example.todolist.model.Task;
-import org.springframework.http.HttpStatus;
+import com.example.todolist.repository.TodoListRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class TaskService {
+@Service
+@RequiredArgsConstructor
+public class TaskService implements TodoListRepository{
+
     private List<Task> tasks = new ArrayList<>();
     public void saveTask(Task task) {
         tasks.add(task);
@@ -17,16 +22,16 @@ public class TaskService {
         return tasks;
     }
 
-    public void deleteTask(UUID id) {
-        findByUUID(id);
+    public void removeTask(UUID id) {
+       findByUUID(id);
     }
 
-    public void findByUUID(UUID uuid) {
-
-        for (Task task : getTasks()) {
-            if(task.getId().toString().equals(uuid.toString())) {
-                tasks.remove(task);
-            }
-        }
+    @Override
+    public boolean findByUUID(UUID uuid) {
+        return getTasks().
+                removeIf(
+                        task -> task.getId().
+                                toString().equals(uuid.toString())
+                );
     }
 }

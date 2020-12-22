@@ -1,5 +1,8 @@
 package com.example.todolist.repository;
 
-public class TodoListRepository {
+import java.util.UUID;
 
+public interface TodoListRepository {
+
+    boolean findByUUID(UUID uuid);
 }
